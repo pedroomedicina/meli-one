@@ -23,4 +23,5 @@
 /frontend/yarn-error.log*
 
 # idea
-../.idea/watcherTasks.xml
+../.idea
+/.idea
