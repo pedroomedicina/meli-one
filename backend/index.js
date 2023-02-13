@@ -1,10 +1,12 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
-const port = 3001
+const port = 3002
 
-app.get('/', (req, res) => {
-    res.send('It works!')
-})
+const user = require('./routers/user')
+
+app.use(cors())
+app.use(user)
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
