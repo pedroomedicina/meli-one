@@ -5,8 +5,7 @@ function App() {
   return (
     <WithNavigation>
       <Container>
-        <h1>The app works!</h1>
-        <Typography>Material UI kit works!</Typography>
+        <Typography>PRODUCTOS</Typography>
       </Container>
     </WithNavigation>
   );

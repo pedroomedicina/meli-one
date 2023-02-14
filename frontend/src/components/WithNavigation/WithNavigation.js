@@ -3,17 +3,17 @@ import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import {Link} from "react-router-dom"
 import styled from "@emotion/styled";
 import {Search as SearchIcon} from "@mui/icons-material";
-import {InputBase} from "@mui/material";
-import { alpha } from '@mui/material/styles';
+import {Button, InputBase} from "@mui/material";
+import {alpha} from '@mui/material/styles';
 import {AccountLevel} from "../AccountLevel/AccountLevel";
+import {UserAvatarWithName} from "../UserAvatar/UserAvatarWithName";
 
-const NavigateHome = ({ className }) => <Link to="/" className={className} />
+const NavigateHome = ({className}) => <Link to="/" className={className}/>
 
 const Logo = styled(NavigateHome)`
   background-image: url("https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/5.21.22/mercadolibre/logo__large_plus@2x.png");
@@ -27,7 +27,7 @@ const SpaceFiller = styled.div`
   flex: 1;
 `
 
-const Search = styled('div')(({ theme }) => ({
+const Search = styled('div')(({theme}) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 1),
@@ -39,7 +39,7 @@ const Search = styled('div')(({ theme }) => ({
   textAlign: 'left',
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled('div')(({theme}) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
   position: 'absolute',
@@ -52,7 +52,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   color: alpha(theme.palette.common.black, 0.5),
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(InputBase)(({theme}) => ({
   color: 'inherit',
   width: '100%',
   '& .MuiInputBase-input': {
@@ -84,32 +84,31 @@ export default function WithNavigation(props) {
   return (
     <React.Fragment>
       <Box sx={headerBoxSx}>
-        <Logo />
+        <Logo/>
         <Search>
           <StyledInputBase
             placeholder="Buscar…"
-            inputProps={{ 'aria-label': 'search' }}
+            inputProps={{'aria-label': 'search'}}
           />
           <SearchIconWrapper>
-            <SearchIcon />
+            <SearchIcon/>
           </SearchIconWrapper>
         </Search>
-        <AccountLevel />
+        <AccountLevel/>
       </Box>
       <Box sx={headerBoxSx}>
-        <Logo />
-        <SpaceFiller />
-        <Tooltip title="Account settings">
-          <IconButton
+        <SpaceFiller/>
+        <Tooltip title="Menu">
+          <Button
+            variant="text"
+            color="neutral"
             onClick={handleClick}
-            size="small"
-            sx={{ml: 2}}
             aria-controls={open ? 'account-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{width: 32, height: 32}}>A</Avatar>
-          </IconButton>
+            <UserAvatarWithName/>
+          </Button>
         </Tooltip>
       </Box>
       <Menu
