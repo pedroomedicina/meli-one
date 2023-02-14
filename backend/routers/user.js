@@ -9,8 +9,13 @@ router.get('/', async (req, res) => {
 
 router.get('/nivel', async (req, res) => {
   const servicioMercadolibre = new MercadolibreService()
-  const usuario = await servicioMercadolibre.getUser()
-  res.json(await servicioMercadolibre.getLevel(usuario.nivel))
+  res.json(await servicioMercadolibre.getLevel(req.query['id_nivel']))
+})
+
+router.get('/restricciones', async (req, res) => {
+  const servicioMercadolibre = new MercadolibreService()
+  console.log(req.query)
+  res.json(await servicioMercadolibre.getUserRestrictions(req.query['id_usuario']))
 })
 
 module.exports = router

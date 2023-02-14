@@ -12,8 +12,9 @@ export function AccountLevel() {
   async function getUserLevel() {
     try {
       setLoading(true)
-      const {data} = await axios.get(`${proxy_api_url}/nivel`);
-      setLevel(data['descripción'])
+      const {data: user} = await axios.get(`${proxy_api_url}/`)
+      const {data: level} = await axios.get(`${proxy_api_url}/nivel?id_nivel=${user['nivel']}`)
+      setLevel(level['descripción'])
     } catch (error) {
       setError('Algo salio mal al cargar tu nivel')
     } finally {

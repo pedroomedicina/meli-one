@@ -12,6 +12,7 @@ import {Button, InputBase} from "@mui/material";
 import {alpha} from '@mui/material/styles';
 import {AccountLevel} from "../AccountLevel/AccountLevel";
 import {UserAvatarWithName} from "../UserAvatar/UserAvatarWithName";
+import {WithRestrictions} from "../WithRestrictions/WithRestrictions";
 
 const NavigateHome = ({className}) => <Link to="/" className={className}/>
 
@@ -81,6 +82,7 @@ export default function WithNavigation(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <React.Fragment>
       <Box sx={headerBoxSx}>
@@ -159,7 +161,9 @@ export default function WithNavigation(props) {
           </MenuItem>
         </StyledMenuLink>
       </Menu>
-      {props.children}
+      <WithRestrictions>
+        {props.children}
+      </WithRestrictions>
     </React.Fragment>
   );
 }

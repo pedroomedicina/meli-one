@@ -2,7 +2,8 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {proxy_api_url} from "../../settings/Services";
 import Avatar from "@mui/material/Avatar";
-import {Button, Typography} from "@mui/material";
+import {Button, Skeleton, Typography} from "@mui/material";
+import styled from "@emotion/styled";
 
 function stringToColor(string) {
   let hash = 0;
@@ -31,6 +32,15 @@ function stringAvatar(name) {
   };
 }
 
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  .MuiAvatar-root, .MuiSkeleton-root {
+    margin-right: .5em;
+  }
+`
+
 export const UserAvatarWithName = () => {
 
   const [loading, setLoading] = useState(false)
@@ -55,17 +65,17 @@ export const UserAvatarWithName = () => {
     getUser()
   }, [])
 
-  const LoadingFallback = () => <Avatar sx={{width: 32, height: 32}}/>
+  const LoadingFallback = () => <Wrapper>
+    <Skeleton height={32} width={32} variant="circular"/> <Skeleton width={128} height={32}/>
+  </Wrapper>
   const ErrorFallback = () => <Button onClick={getUser}>Reintentar</Button>
+
   const AvatarWithImage = () => <Avatar sx={{width: 32, height: 32}} src={imageSource}/>
-
   const NameAvatar = () => fullName && <Avatar {...stringAvatar(fullName)} />
-
   const AvatarWithNoImageFallback = () => imageSource ? <AvatarWithImage/> : <NameAvatar/>
 
   const UserFullName = () => <Typography>{fullName}</Typography>
-
-  const User = () => <><AvatarWithNoImageFallback/><UserFullName/></>
+  const User = () => <Wrapper><AvatarWithNoImageFallback/><UserFullName/></Wrapper>
 
   const ComponentWithErrorFallback = () => error ? <ErrorFallback/> : <User/>
 
