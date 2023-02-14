@@ -12,6 +12,12 @@ const theme = createTheme({
     fontFamily: ['proxima-nova', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       'sans-serif'].join(',')
+  },
+  palette: {
+    neutral: {
+      main: '#64748B',
+      contrastText: '#fff',
+    },
   }
 });
 // ...custom theme
