@@ -11,7 +11,7 @@ import {SearchBar} from "../SearchBar/SearchBar";
 import {SpaceFiller} from "../SpaceFiller/SpaceFiller";
 import {AccountMenu} from "../AccountMenu/AccountMenu";
 
-const NavigateHome = ({className}) => <Link to="/" className={className}/>
+const NavigateHome = ({className}) => <Link data-testid="logo" to="/" className={className}/>
 
 const Logo = styled(NavigateHome)`
   background-image: url("https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/5.21.22/mercadolibre/logo__large_plus@2x.png");
@@ -65,7 +65,7 @@ export default function WithNavigation(props) {
   return (
     <React.Fragment>
       <Box sx={headerBoxSx}>
-        <Logo/>
+        <Logo />
         <SearchBar/>
         <AccountLevel/>
       </Box>

@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-import axios from "axios";
 import {proxy_api_url} from "../settings/Services";
 
 export const useRestrictions = () => {
@@ -10,10 +9,13 @@ export const useRestrictions = () => {
   async function getUserRestrictions() {
     try {
       setLoadingRestrictions(true)
-      const {data: user} = await axios.get(`${proxy_api_url}/`)
-      const {data: restrictions} = await axios.get(`${proxy_api_url}/restricciones?id_usuario=${user['id_usuario']}`)
+      const userResponse = await fetch(`${proxy_api_url}/`)
+      const user = await userResponse.json()
+      const restrictionsResponse = await fetch(`${proxy_api_url}/restricciones?id_usuario=${user['id_usuario']}`)
+      const restrictions = await restrictionsResponse.json()
       setRestrictions(restrictions)
     } catch (error) {
+      console.log(error)
       setError('Algo salio mal')
     } finally {
       setLoadingRestrictions(false)

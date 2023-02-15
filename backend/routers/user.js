@@ -14,7 +14,6 @@ router.get('/nivel', async (req, res) => {
 
 router.get('/restricciones', async (req, res) => {
   const servicioMercadolibre = new MercadolibreService()
-  console.log(req.query)
   res.json(await servicioMercadolibre.getUserRestrictions(req.query['id_usuario']))
 })
 

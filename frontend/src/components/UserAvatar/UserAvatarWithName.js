@@ -1,8 +1,7 @@
 import {useEffect, useState} from "react";
-import axios from "axios";
 import {proxy_api_url} from "../../settings/Services";
 import Avatar from "@mui/material/Avatar";
-import {Button, Skeleton, Typography} from "@mui/material";
+import { Skeleton, Typography} from "@mui/material";
 import styled from "@emotion/styled";
 
 function stringToColor(string) {
@@ -51,7 +50,8 @@ export const UserAvatarWithName = () => {
   async function getUser() {
     try {
       setLoading(true)
-      const {data} = await axios.get(`${proxy_api_url}/`)
+      const userResponse = await fetch(`${proxy_api_url}/`)
+      const data = await userResponse.json()
       setFullName(`${data['nombre']} ${data['apellido']}`)
       setImageSource(data['imagen'])
     } catch (error) {
@@ -68,7 +68,7 @@ export const UserAvatarWithName = () => {
   const LoadingFallback = () => <Wrapper>
     <Skeleton height={32} width={32} variant="circular"/> <Skeleton width={128} height={32}/>
   </Wrapper>
-  const ErrorFallback = () => <Button onClick={getUser}>Reintentar</Button>
+  const ErrorFallback = () => <Typography onClick={getUser}>Reintentar</Typography>
 
   const AvatarWithImage = () => <Avatar sx={{width: 32, height: 32}} src={imageSource}/>
   const NameAvatar = () => fullName && <Avatar {...stringAvatar(fullName)} />
