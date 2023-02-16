@@ -20,12 +20,12 @@ export const AccountMenuitems = ({handleClose}) => {
   }
 
   return <>
-    <MenuItem onClick={handleNavigate}>
+    <MenuItem onClick={() => handleNavigate('/profile')}>
       <Avatar/><Typography>
       Perfil
     </Typography>
     </MenuItem>
-    <MenuItem onClick={handleNavigate}>
+    <MenuItem onClick={() => handleNavigate('/')}>
       <Typography>Página principal</Typography>
     </MenuItem>
   </>

@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 
 export function UnverifiedAccount () {
   return <Wrapper>
-    <SettingsInputCompositeIcon color="neutral" />
+    <SettingsInputCompositeIcon color="neutral" data-testid='unverified-account-icon' />
     <Typography>¡Verifica tu cuenta para poder acceder a miles de productos y servicios!</Typography>
   </Wrapper>
 }

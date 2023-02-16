@@ -65,12 +65,13 @@ export const UserAvatarWithName = () => {
     getUser()
   }, [])
 
-  const LoadingFallback = () => <Wrapper>
-    <Skeleton height={32} width={32} variant="circular"/> <Skeleton width={128} height={32}/>
+  const LoadingFallback = () => <Wrapper data-testid="skeleton-wrapper">
+    <Skeleton height={32} width={32} variant="circular" data-testid="avatar-skeleton"/>
+    <Skeleton data-testid="name-skeleton" width={128} height={32}/>
   </Wrapper>
   const ErrorFallback = () => <Typography onClick={getUser}>Reintentar</Typography>
 
-  const AvatarWithImage = () => <Avatar sx={{width: 32, height: 32}} src={imageSource}/>
+  const AvatarWithImage = () => <Avatar data-testid="user-avatar" sx={{width: 32, height: 32}} src={imageSource}/>
   const NameAvatar = () => fullName && <Avatar {...stringAvatar(fullName)} />
   const AvatarWithNoImageFallback = () => imageSource ? <AvatarWithImage/> : <NameAvatar/>
 
