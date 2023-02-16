@@ -4,7 +4,7 @@ import {proxy_api_url} from "../settings/Services";
 export const useRestrictions = () => {
   const [loadingRestrictions, setLoadingRestrictions] = useState(false)
   const [error, setError] = useState('')
-  const [restrictions, setRestrictions] = useState([])
+  const [restrictions, setRestrictions] = useState()
 
   async function getUserRestrictions() {
     try {
@@ -15,7 +15,6 @@ export const useRestrictions = () => {
       const restrictions = await restrictionsResponse.json()
       setRestrictions(restrictions)
     } catch (error) {
-      console.log(error)
       setError('Algo salio mal')
     } finally {
       setLoadingRestrictions(false)
