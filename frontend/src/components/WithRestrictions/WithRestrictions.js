@@ -1,28 +1,24 @@
 import {UnverifiedAccount} from "../UnverifiedAccount/UnverifiedAccount";
-import {Skeleton} from "@mui/material";
-import styled from "@emotion/styled";
 import {useRestrictions} from "../../hooks/useRestrictions";
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1em;
-
-  .MuiSkeleton-root {
-    width: 100%;
-    height: 3em;
-  }
-`
 
 export function WithRestrictions({children}) {
-  const {loadingRestrictions, restrictions} = useRestrictions()
+  const {restrictions} = useRestrictions()
 
-  const accountIsNotYetVerified = Array.isArray(restrictions) &&
+  const accountIsNotYetVerifiedRestriction = Array.isArray(restrictions) &&
     restrictions.find(restriction => restriction['mensaje']
       .includes('Tu cuenta no ha sido verificada')
     )
-  const Panel = () => accountIsNotYetVerified ? <UnverifiedAccount/> : <>{children}</>
+  const Panel = () => <>
+    {accountIsNotYetVerifiedRestriction &&
+      <UnverifiedAccount
+        severity={accountIsNotYetVerifiedRestriction['tipo']}
+        message={accountIsNotYetVerifiedRestriction['mensaje']}
+      />}
+    {children}
+  </>
 
-  return loadingRestrictions ? <Wrapper><Skeleton data-testid="restrictions-skeleton" variant="rectangular"/></Wrapper> : <Panel/>
+  return <>
+    <Panel/>
+  </>
 }

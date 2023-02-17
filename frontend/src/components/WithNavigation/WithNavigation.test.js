@@ -1,4 +1,4 @@
-import {render, screen } from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import WithNavigation from "./WithNavigation";
 import {MemoryRouter} from "react-router-dom";
 import MockTheme from "../../__mocks__/MockTheme/MockTheme";
@@ -6,10 +6,6 @@ import MockTheme from "../../__mocks__/MockTheme/MockTheme";
 jest.mock('../AccountLevel/AccountLevel', () => ({
   __esModule: true,
   AccountLevel: () => <mock-account-level data-testid="account-level" />
-}))
-jest.mock('../WithRestrictions/WithRestrictions', () => ({
-  __esModule: true,
-  WithRestrictions: () => <mock-account-restricions data-testid="account-restricions" />
 }))
 jest.mock('../UserAvatar/UserAvatarWithName', () => ({
   __esModule: true,
@@ -46,9 +42,12 @@ test('renders user avatar component', async () => {
   expect(menuButton).toBeInTheDocument()
 });
 
-test('renders user restrictions higher order component', async () => {
-  const hoc = screen.getByTestId('account-restricions')
-  expect(hoc).toBeInTheDocument()
-})
+test('renders user purchases menu item component', async () => {
+  const userPurchases = screen.getByText(/mis compras/i)
+  expect(userPurchases).toBeInTheDocument()
+});
 
-afterAll(() => { fetch.resetMocks() })
+afterAll(() => {
+  fetch.resetMocks()
+  jest.clearAllMocks()
+})

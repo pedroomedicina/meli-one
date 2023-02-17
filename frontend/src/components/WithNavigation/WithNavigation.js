@@ -1,12 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import styled from "@emotion/styled";
-import {Button} from "@mui/material";
+import {Button, Typography} from "@mui/material";
 import {AccountLevel} from "../AccountLevel/AccountLevel";
 import {UserAvatarWithName} from "../UserAvatar/UserAvatarWithName";
-import {WithRestrictions} from "../WithRestrictions/WithRestrictions";
 import {SearchBar} from "../SearchBar/SearchBar";
 import {SpaceFiller} from "../SpaceFiller/SpaceFiller";
 import {AccountMenu} from "../AccountMenu/AccountMenu";
@@ -21,7 +20,7 @@ const Logo = styled(NavigateHome)`
 `
 
 const headerBoxSx = {
-  display: 'flex', alignItems: 'center', textAlign: 'center', padding: '1em 10em', backgroundColor: '#fff159',
+  display: 'flex', alignItems: 'center', textAlign: 'center', padding: '1em 8.75em', backgroundColor: '#fff159',
   justifyContent: 'space-between'
 }
 
@@ -61,6 +60,10 @@ export default function WithNavigation(props) {
     setAccountMenuAnchor(null)
   };
   const accountMenuisOpen = Boolean(accountMenuAnchor)
+  const navigate = useNavigate()
+  const goToUserPurchases = () => {
+    navigate('/my-purchases')
+  }
 
   return (
     <React.Fragment>
@@ -83,12 +86,18 @@ export default function WithNavigation(props) {
             <UserAvatarWithName/>
           </Button>
         </Tooltip>
+        <Tooltip title="Mis compras">
+          <Button
+            variant="text"
+            color="neutral"
+            onClick={goToUserPurchases}>
+            <Typography>Mis compras</Typography>
+          </Button>
+        </Tooltip>
       </Box>
       <AccountMenu accountMenuAnchor={accountMenuAnchor} paperProps={commonPaperProps}
                    handleClose={handleCloseAccountMenu}/>
-      <WithRestrictions>
         {props.children}
-      </WithRestrictions>
     </React.Fragment>
   );
 }

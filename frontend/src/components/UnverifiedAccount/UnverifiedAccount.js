@@ -1,23 +1,7 @@
-import {Typography} from "@mui/material";
-import SettingsInputCompositeIcon from '@mui/icons-material/SettingsInputComposite';
-import styled from "@emotion/styled";
+import {Alert, Typography} from "@mui/material";
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  padding: 2em;
-  
-  .MuiTypography-root {
-    margin-top: 1em;
-  }
-`
-
-export function UnverifiedAccount () {
-  return <Wrapper>
-    <SettingsInputCompositeIcon color="neutral" data-testid='unverified-account-icon' />
-    <Typography>¡Verifica tu cuenta para poder acceder a miles de productos y servicios!</Typography>
-  </Wrapper>
+export function UnverifiedAccount (props) {
+  return <Alert sx={{padding: '0 10em'}} severity={props.severity || "warning"} data-testid={'unverified-account-alert'}>
+    <Typography>{props.message || '¡Verifica tu cuenta para poder acceder a miles de productos y servicios!'}</Typography>
+  </Alert>
 }
