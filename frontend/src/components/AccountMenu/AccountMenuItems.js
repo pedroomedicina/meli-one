@@ -25,6 +25,9 @@ export const AccountMenuitems = ({handleClose}) => {
       Perfil
     </Typography>
     </MenuItem>
+    <MenuItem onClick={() => handleNavigate('/my-purchases')}>
+      <Typography>Mis compras</Typography>
+    </MenuItem>
     <MenuItem onClick={() => handleNavigate('/')}>
       <Typography>Página principal</Typography>
     </MenuItem>

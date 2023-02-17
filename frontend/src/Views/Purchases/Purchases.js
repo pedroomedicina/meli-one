@@ -3,7 +3,8 @@ import WithNavigation from "../../components/WithNavigation/WithNavigation";
 import {useCallback, useEffect, useState} from "react";
 import {proxy_api_url} from "../../settings/Services";
 import {serialize} from "../../utils/serializeObjectToQueryParameters";
-import PurchaseListitem from "../../components/PurchaseListItem/PurchaseListitem";
+import PurchaseListItem from "../../components/PurchaseListItem/PurchaseListItem";
+import {WithRestrictions} from "../../components/WithRestrictions/WithRestrictions";
 
 const StyledSkeleton = styled(Skeleton)`
   height: 250px;
@@ -59,21 +60,24 @@ export const Purchases = () => {
 
   const WithLoadingFallback = ({children}) => loading ? <SkeletonStack /> : <>{children}</>
 
-  return <WithNavigation>
-    <Container maxWidth='xl'>
-      <WithLoadingFallback>
-        <Box sx={{ width: '100%', padding: '1em 0' }}>
-          <Stack spacing={2}>
-            {Array.isArray(purchases) && purchases.map((purchase) => (<PurchaseListitem key={purchase['id_compra']} purchase={purchase} />))}
-          </Stack>
-        </Box>
-
-        <Pagination
-          count={Math.round(totalPurchases / limit)} shape="rounded" showFirstButton showLastButton
-          onChange={handleChangePage} page={(offset / limit) + 1}
-        />
-      </WithLoadingFallback>
-    </Container>
-  </WithNavigation>
+  return <>
+    <WithRestrictions />
+    <WithNavigation>
+      <Container maxWidth='xl'>
+        <WithLoadingFallback>
+          <Box sx={{ width: '100%', padding: '1em 0' }}>
+            <Stack spacing={2}>
+              {Array.isArray(purchases) && purchases.map((purchase) => (<PurchaseListItem key={purchase['id_compra']} purchase={purchase} />))}
+            </Stack>
+          </Box>
+          <Pagination
+            size='large' sx={{display: 'flex', justifyContent: 'center', padding: '0.5em 0 1em'}}
+            count={Math.round(totalPurchases / limit)} shape="rounded" showFirstButton showLastButton
+            onChange={handleChangePage} page={(offset / limit) + 1}
+          />
+        </WithLoadingFallback>
+      </Container>
+    </WithNavigation>
+  </>
 }
 

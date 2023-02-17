@@ -7,10 +7,6 @@ jest.mock('../AccountLevel/AccountLevel', () => ({
   __esModule: true,
   AccountLevel: () => <mock-account-level data-testid="account-level" />
 }))
-jest.mock('../WithRestrictions/WithRestrictions', () => ({
-  __esModule: true,
-  WithRestrictions: () => <mock-account-restricions data-testid="account-restricions" />
-}))
 jest.mock('../UserAvatar/UserAvatarWithName', () => ({
   __esModule: true,
   UserAvatarWithName: () => <mock-user-avatar data-testid="user-avatar" />
@@ -50,10 +46,5 @@ test('renders user purchases menu item component', async () => {
   const userPurchases = screen.getByText(/mis compras/i)
   expect(userPurchases).toBeInTheDocument()
 });
-
-test('renders user restrictions higher order component', async () => {
-  const hoc = screen.getByTestId('account-restricions')
-  expect(hoc).toBeInTheDocument()
-})
 
 afterAll(() => { fetch.resetMocks() })

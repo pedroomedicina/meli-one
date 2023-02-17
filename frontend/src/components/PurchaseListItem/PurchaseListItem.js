@@ -8,9 +8,8 @@ import Typography from '@mui/material/Typography';
 import {Box, CardHeader} from "@mui/material";
 import moment from 'moment';
 
-export default function PurchaseListitem({purchase}) {
-  const {fecha, imagen, titulo, vendedor, cantidad} = purchase
-
+export default function PurchaseListItem({purchase}) {
+  const {fecha, imagen, titulo, vendedor, cantidad, id_compra, precio} = purchase
   const unidades = cantidad > 1 ? `${cantidad} unidades` : '1 unidad'
   const isCurrentYear = new Date(fecha).getUTCFullYear() === new Date().getUTCFullYear()
   const fechaFormateada = moment(fecha).format(isCurrentYear ? 'L' : 'LL')
@@ -18,23 +17,26 @@ export default function PurchaseListitem({purchase}) {
   return (
     <Card sx={{width: '100%'}}>
       <CardHeader sx={{borderBottom: '1px solid rgba(0,0,0,.1)'}}
-                  title={fechaFormateada} titleTypographyProps={{variant: 'h6'}}/>
+                  title={fechaFormateada} data-testid="purchase-date"
+                  titleTypographyProps={{variant: 'subtitle2', sx: {fontWeight: 'bold'}}} />
       <CardContent sx={{display: 'flex'}}>
         <Box sx={{display: 'flex', flex: 2}}>
           <CardMedia
             sx={{height: 74, width: 74, borderRadius: '6px', backgroundSize: 'contain'}}
             image={imagen}
-            title="green iguana"
           />
           <Box sx={{marginLeft: '1em'}}>
-            <Typography variant="body1" component="div">
-              ...Datos de envio...
+            <Typography variant="subtitle1" component="div">
+              identificador: #{id_compra}
             </Typography>
             <Typography variant="body2" component="div">
               {titulo}
             </Typography>
             <Typography variant="body2" component="div">
               {unidades}
+            </Typography>
+            <Typography variant="body2" component="div">
+              Costo: {precio['moneda']} {precio['total'].toLocaleString()}
             </Typography>
           </Box>
         </Box>

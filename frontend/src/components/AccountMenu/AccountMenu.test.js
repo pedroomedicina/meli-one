@@ -17,10 +17,12 @@ test('renders a menu with two links, one to perfil view and another to pagina pr
     </MemoryRouter>
   );
 
-  const perfilLink = screen.getByText(/Perfil/)
+  const perfilLink = screen.getByText(/Perfil/i)
   expect(perfilLink).toBeInTheDocument()
-  const paginaPrincipalLink = screen.getByText(/Página principal/)
+  const paginaPrincipalLink = screen.getByText(/Página principal/i)
   expect(paginaPrincipalLink).toBeInTheDocument()
+  const misComprasLink = screen.getByText(/Mis compras/i)
+  expect(misComprasLink).toBeInTheDocument()
 });
 
 afterAll(() => {fetch.resetMocks()})
