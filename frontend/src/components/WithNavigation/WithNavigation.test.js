@@ -47,4 +47,7 @@ test('renders user purchases menu item component', async () => {
   expect(userPurchases).toBeInTheDocument()
 });
 
-afterAll(() => { fetch.resetMocks() })
+afterAll(() => {
+  fetch.resetMocks()
+  jest.clearAllMocks()
+})

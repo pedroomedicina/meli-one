@@ -62,7 +62,6 @@ export default function WithNavigation(props) {
   const accountMenuisOpen = Boolean(accountMenuAnchor)
   const navigate = useNavigate()
   const goToUserPurchases = () => {
-    console.log('\n\n\n\n\n NAVIGATING TO USER ORDERS \n\n\n\n\n')
     navigate('/my-purchases')
   }
 

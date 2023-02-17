@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react';
-import PurchaseListItem from "./PurchaseListItem";
+import {PurchaseListItem} from "./PurchaseListItem";
 
 test('renders a purchase list item with all its information', async () => {
   render(<PurchaseListItem purchase={{

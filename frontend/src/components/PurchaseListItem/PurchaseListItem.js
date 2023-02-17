@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import {Box, CardHeader} from "@mui/material";
 import moment from 'moment';
 
-export default function PurchaseListItem({purchase}) {
+export function PurchaseListItem({purchase}) {
   const {fecha, imagen, titulo, vendedor, cantidad, id_compra, precio} = purchase
   const unidades = cantidad > 1 ? `${cantidad} unidades` : '1 unidad'
   const isCurrentYear = new Date(fecha).getUTCFullYear() === new Date().getUTCFullYear()
