@@ -1,22 +1,12 @@
 import {WithRestrictions} from "./WithRestrictions";
-import {render, screen, waitForElementToBeRemoved} from "@testing-library/react";
-
-test('renders a skeleton, then loads a child component when user has no restrictions', async () => {
-  render(<WithRestrictions>
-    <div>mock child component</div>
-  </WithRestrictions>)
-
-  await waitForElementToBeRemoved(() => screen.queryByTestId(/restrictions-skeleton/))
-  const childComponent = screen.getByText('mock child component')
-  expect(childComponent).toBeInTheDocument()
-})
+import {render, screen} from "@testing-library/react";
 
 jest.mock('../UnverifiedAccount/UnverifiedAccount', () => ({
   __esModule: true,
   UnverifiedAccount: () => <mock-unverified-account data-testid="unverified-account" />
 }))
 
-test('renders a skeleton, then loads a restriction component when user has one', async () => {
+test('loads a restriction component when user has one', async () => {
   fetch.mockResponses([
       JSON.stringify({
         "id_usuario": 1, "nombre": "Mercadolibre", "apellido": "User", "nivel": "ORO",
@@ -34,9 +24,10 @@ test('renders a skeleton, then loads a restriction component when user has one',
     <div>mock child component</div>
   </WithRestrictions>)
 
-  await waitForElementToBeRemoved(() => screen.queryByTestId(/restrictions-skeleton/))
-  const restrictionComponent = screen.getByTestId('unverified-account')
+  const restrictionComponent = await screen.findByTestId('unverified-account')
   expect(restrictionComponent).toBeInTheDocument()
+  const childComponent = screen.getByText(/mock child component/i)
+  expect(childComponent).toBeInTheDocument()
 })
 
 afterEach(() => {fetch.resetMocks()})

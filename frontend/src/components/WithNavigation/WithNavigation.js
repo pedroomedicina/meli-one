@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import styled from "@emotion/styled";
-import {Button} from "@mui/material";
+import {Button, Typography} from "@mui/material";
 import {AccountLevel} from "../AccountLevel/AccountLevel";
 import {UserAvatarWithName} from "../UserAvatar/UserAvatarWithName";
 import {WithRestrictions} from "../WithRestrictions/WithRestrictions";
@@ -61,6 +61,11 @@ export default function WithNavigation(props) {
     setAccountMenuAnchor(null)
   };
   const accountMenuisOpen = Boolean(accountMenuAnchor)
+  const navigate = useNavigate()
+  const goToUserPurchases = () => {
+    console.log('\n\n\n\n\n NAVIGATING TO USER ORDERS \n\n\n\n\n')
+    navigate('/my-purchases')
+  }
 
   return (
     <React.Fragment>
@@ -81,6 +86,14 @@ export default function WithNavigation(props) {
             aria-expanded={accountMenuisOpen ? 'true' : undefined}
           >
             <UserAvatarWithName/>
+          </Button>
+        </Tooltip>
+        <Tooltip title="Mis compras">
+          <Button
+            variant="text"
+            color="neutral"
+            onClick={goToUserPurchases}>
+            <Typography>Mis compras</Typography>
           </Button>
         </Tooltip>
       </Box>

@@ -1,4 +1,4 @@
-import {render, screen } from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import WithNavigation from "./WithNavigation";
 import {MemoryRouter} from "react-router-dom";
 import MockTheme from "../../__mocks__/MockTheme/MockTheme";
@@ -44,6 +44,11 @@ test('renders search bar', async () => {
 test('renders user avatar component', async () => {
   const menuButton = screen.getByTestId(/user-avatar/i)
   expect(menuButton).toBeInTheDocument()
+});
+
+test('renders user purchases menu item component', async () => {
+  const userPurchases = screen.getByText(/mis compras/i)
+  expect(userPurchases).toBeInTheDocument()
 });
 
 test('renders user restrictions higher order component', async () => {

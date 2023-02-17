@@ -10,10 +10,9 @@ test('renders an icon and a teaser phrase for the user to verify its account', a
     </MockTheme>
   </MemoryRouter>);
 
-  const icon = screen.getByTestId('unverified-account-icon')
-  expect(icon).toBeInTheDocument()
+  const alert = screen.getByTestId('unverified-account-alert')
+  expect(alert).toBeInTheDocument()
 
-  const unverifiedAccountTeaser = screen.getByText('¡Verifica tu cuenta para poder acceder a miles de productos y servicios!')
-  expect(unverifiedAccountTeaser).toBeInTheDocument()
-  expect(unverifiedAccountTeaser).toBeVisible()
+  const unverifiedAccountMessage = screen.getByText('¡Verifica tu cuenta para poder acceder a miles de productos y servicios!')
+  expect(unverifiedAccountMessage).toBeInTheDocument()
 });
