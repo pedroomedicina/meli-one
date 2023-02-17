@@ -1,5 +1,5 @@
 const express = require('express')
-const MercadolibreService = require("../services/MercadoLibreService/MercadolibreService")
+const MercadolibreService = require("../../services/MercadoLibreService/MercadolibreService")
 const router = express.Router()
 
 router.get('/', async (req, res) => {
