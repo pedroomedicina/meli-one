@@ -4,8 +4,8 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {RouterProvider} from "react-router-dom";
 import {router} from "./settings/Router";
-
 import {createTheme, ThemeProvider} from '@mui/material';
+
 
 const theme = createTheme({
   typography: {
@@ -20,7 +20,6 @@ const theme = createTheme({
     },
   }
 });
-// ...custom theme
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -6,9 +6,19 @@ import {serialize} from "../../utils/serializeObjectToQueryParameters";
 import PurchaseListitem from "../../components/PurchaseListItem/PurchaseListitem";
 
 const StyledSkeleton = styled(Skeleton)`
-  height: 500px;
+  height: 250px;
   width: 100%;
 `
+
+const SkeletonStack = () => <Box sx={{ width: '100%', padding: '1em 0' }}>
+  <Stack>
+    <StyledSkeleton />
+    <StyledSkeleton />
+    <StyledSkeleton />
+    <StyledSkeleton />
+    <StyledSkeleton />
+  </Stack>
+</Box>
 
 export const Purchases = () => {
   const [loading, setLoading] = useState(false)
@@ -47,14 +57,14 @@ export const Purchases = () => {
     loadPurchases()
   }, [loadPurchases, offset])
 
-  const WithLoadingFallback = ({children}) => loading ? <StyledSkeleton/> : <>{children}</>
+  const WithLoadingFallback = ({children}) => loading ? <SkeletonStack /> : <>{children}</>
 
   return <WithNavigation>
-    <Container>
+    <Container maxWidth='xl'>
       <WithLoadingFallback>
-        <Box sx={{ width: '100%', paddingTop: '1em' }}>
-          <Stack container spacing={2}>
-            {Array.isArray(purchases) && purchases.map(() => (<PurchaseListitem/>))}
+        <Box sx={{ width: '100%', padding: '1em 0' }}>
+          <Stack spacing={2}>
+            {Array.isArray(purchases) && purchases.map((purchase) => (<PurchaseListitem key={purchase['id_compra']} purchase={purchase} />))}
           </Stack>
         </Box>
 
