@@ -1,13 +1,6 @@
-const express = require('express')
-const cors = require('cors')
-const app = express()
-const port = 3002
+const app = require('./app')
+require('dotenv').config()
 
-const user = require('./routers/user')
-
-app.use(cors())
-app.use(user)
-
-app.listen(port, () => {
-    console.log(`Server listening on port ${port}`)
+app.listen(process.env['PORT'], () => {
+    console.log(`Server listening on port ${process.env['PORT']}`)
 })

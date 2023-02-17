@@ -18,8 +18,11 @@ const Wrapper = styled.div`
 export function WithRestrictions({children}) {
   const {loadingRestrictions, restrictions} = useRestrictions()
 
-  const accountIsNotYetVerified = restrictions.length && restrictions.find(restriction => restriction['mensaje'].includes('Tu cuenta no ha sido verificada'))
+  const accountIsNotYetVerified = Array.isArray(restrictions) &&
+    restrictions.find(restriction => restriction['mensaje']
+      .includes('Tu cuenta no ha sido verificada')
+    )
   const Panel = () => accountIsNotYetVerified ? <UnverifiedAccount/> : <>{children}</>
 
-  return loadingRestrictions ? <Wrapper><Skeleton variant="rectangular"/></Wrapper> : <Panel/>
+  return loadingRestrictions ? <Wrapper><Skeleton data-testid="restrictions-skeleton" variant="rectangular"/></Wrapper> : <Panel/>
 }

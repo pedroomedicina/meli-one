@@ -1,5 +1,4 @@
 import {Button, Typography} from "@mui/material";
-import axios from "axios";
 import {useEffect, useState} from "react";
 import {proxy_api_url} from "../../settings/Services";
 
@@ -12,8 +11,10 @@ export function AccountLevel() {
   async function getUserLevel() {
     try {
       setLoading(true)
-      const {data: user} = await axios.get(`${proxy_api_url}/`)
-      const {data: level} = await axios.get(`${proxy_api_url}/nivel?id_nivel=${user['nivel']}`)
+      const userResponse = await fetch(`${proxy_api_url}/`)
+      const user = await userResponse.json()
+      const levelResponse = await fetch(`${proxy_api_url}/nivel?id_nivel=${user['nivel']}`)
+      const level = await levelResponse.json()
       setLevel(level['descripción'])
     } catch (error) {
       setError('Algo salio mal al cargar tu nivel')
