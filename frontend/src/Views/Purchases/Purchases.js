@@ -3,7 +3,7 @@ import WithNavigation from "../../components/WithNavigation/WithNavigation";
 import {useCallback, useEffect, useState} from "react";
 import {proxy_api_url} from "../../settings/Services";
 import {serialize} from "../../utils/serializeObjectToQueryParameters";
-import PurchaseListItem from "../../components/PurchaseListItem/PurchaseListItem";
+import {PurchaseListItem} from "../../components/PurchaseListItem/PurchaseListItem";
 import {WithRestrictions} from "../../components/WithRestrictions/WithRestrictions";
 
 const StyledSkeleton = styled(Skeleton)`
@@ -11,13 +11,13 @@ const StyledSkeleton = styled(Skeleton)`
   width: 100%;
 `
 
-const SkeletonStack = () => <Box sx={{ width: '100%', padding: '1em 0' }}>
-  <Stack>
-    <StyledSkeleton />
-    <StyledSkeleton />
-    <StyledSkeleton />
-    <StyledSkeleton />
-    <StyledSkeleton />
+const SkeletonStack = () => <Box sx={{width: '100%', padding: '1em 0'}}>
+  <Stack data-testid='purchases-skeleton-stack'>
+    <StyledSkeleton/>
+    <StyledSkeleton/>
+    <StyledSkeleton/>
+    <StyledSkeleton/>
+    <StyledSkeleton/>
   </Stack>
 </Box>
 
@@ -58,24 +58,26 @@ export const Purchases = () => {
     loadPurchases()
   }, [loadPurchases, offset])
 
-  const WithLoadingFallback = ({children}) => loading ? <SkeletonStack /> : <>{children}</>
+  const WithLoadingFallback = () => loading ? <SkeletonStack/> :
+    <>
+      <Box sx={{width: '100%', padding: '1em 0'}}>
+        <Stack spacing={2}>
+          {Array.isArray(purchases) && purchases.map((purchase) => (
+            <PurchaseListItem key={purchase['id_compra']} purchase={purchase}/>))}
+        </Stack>
+      </Box>
+      <Pagination
+        size='large' sx={{display: 'flex', justifyContent: 'center', padding: '0.5em 0 1em'}}
+        count={Math.round(totalPurchases / limit)} shape="rounded" showFirstButton showLastButton
+        onChange={handleChangePage} page={(offset / limit) + 1}
+      />
+    </>
 
   return <>
-    <WithRestrictions />
+    <WithRestrictions/>
     <WithNavigation>
       <Container maxWidth='xl'>
-        <WithLoadingFallback>
-          <Box sx={{ width: '100%', padding: '1em 0' }}>
-            <Stack spacing={2}>
-              {Array.isArray(purchases) && purchases.map((purchase) => (<PurchaseListItem key={purchase['id_compra']} purchase={purchase} />))}
-            </Stack>
-          </Box>
-          <Pagination
-            size='large' sx={{display: 'flex', justifyContent: 'center', padding: '0.5em 0 1em'}}
-            count={Math.round(totalPurchases / limit)} shape="rounded" showFirstButton showLastButton
-            onChange={handleChangePage} page={(offset / limit) + 1}
-          />
-        </WithLoadingFallback>
+        <WithLoadingFallback/>
       </Container>
     </WithNavigation>
   </>
