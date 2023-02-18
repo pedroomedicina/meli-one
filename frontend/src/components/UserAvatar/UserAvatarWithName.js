@@ -1,8 +1,7 @@
-import {useEffect, useState} from "react";
-import {proxy_api_url} from "../../settings/Services";
 import Avatar from "@mui/material/Avatar";
 import { Skeleton, Typography} from "@mui/material";
 import styled from "@emotion/styled";
+import {useUserInfo} from "../../hooks/useUserInfo";
 
 function stringToColor(string) {
   let hash = 0;
@@ -42,28 +41,7 @@ const Wrapper = styled.div`
 
 export const UserAvatarWithName = () => {
 
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [imageSource, setImageSource] = useState('')
-  const [fullName, setFullName] = useState('')
-
-  async function getUser() {
-    try {
-      setLoading(true)
-      const userResponse = await fetch(`${proxy_api_url}/`)
-      const data = await userResponse.json()
-      setFullName(`${data['nombre']} ${data['apellido']}`)
-      setImageSource(data['imagen'])
-    } catch (error) {
-      setError(`Algo salio mal al cargar tu informacion: ${error}`)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    getUser()
-  }, [])
+  const {loading, error, fullName, imageSource, getUser} = useUserInfo()
 
   const LoadingFallback = () => <Wrapper data-testid="skeleton-wrapper">
     <Skeleton height={32} width={32} variant="circular" data-testid="avatar-skeleton"/>

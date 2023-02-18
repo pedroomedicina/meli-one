@@ -12,8 +12,6 @@ export const AccountMenu = ({accountMenuAnchor, handleClose, paperProps}) => {
     onClose={handleClose}
     onClick={handleClose}
     PaperProps={paperProps}
-    transformOrigin={{horizontal: 'right', vertical: 'top'}}
-    anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
   >
     <AccountMenuitems handleClose={handleClose} />
   </Menu>
