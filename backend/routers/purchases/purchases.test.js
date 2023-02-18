@@ -26,4 +26,30 @@ describe("User purchases path", () => {
     expect(MercadolibreService).toHaveBeenCalled()
     expect(MercadolibreService.mock.instances[0].getUserPurchases).toHaveBeenCalledWith("1", '10', '5')
   })
+
+  test("It should respond with success to GET shipment if given a valid shipmentId", async () => {
+    await request(app).get("/compras/envio?id_envio=1");
+    expect(MercadolibreService).toHaveBeenCalled()
+    expect(MercadolibreService.mock.instances[0].getShipment).toHaveBeenCalledWith("1")
+  })
+
+  test("It should respond with error to GET shipment if not given a shipmentId", async () => {
+    const response = await request(app).get("/compras/envio");
+    expect(response.statusCode).toBe(400)
+    expect(response.error.text).toBe('Required query params missing')
+    expect(MercadolibreService).not.toHaveBeenCalled()
+  })
+
+  test("It should respond with success to GET paymet if given a valid paymentId", async () => {
+    await request(app).get("/compras/pago?id_transaccion=1");
+    expect(MercadolibreService).toHaveBeenCalled()
+    expect(MercadolibreService.mock.instances[0].getPayment).toHaveBeenCalledWith("1")
+  })
+
+  test("It should respond with error to GET shipment if not given a shipmentId", async () => {
+    const response = await request(app).get("/compras/pago");
+    expect(response.statusCode).toBe(400)
+    expect(response.error.text).toBe('Required query params missing')
+    expect(MercadolibreService).not.toHaveBeenCalled()
+  })
 })
