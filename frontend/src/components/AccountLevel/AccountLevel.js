@@ -2,7 +2,7 @@ import {Button, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import {proxy_api_url} from "../../settings/Services";
 
-export function AccountLevel() {
+export function AccountLevel(props) {
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -27,10 +27,10 @@ export function AccountLevel() {
     getUserLevel()
   }, [])
 
-  const LoadingFallback = () => 'Cargando informacion de nivel...'
+  const LoadingFallback = () => <Typography sx={{margin: '.5em 0'}} >Cargando informacion de nivel...</Typography>
   const ErrorFallback = () => <div><Typography>{error}</Typography><Button onClick={getUserLevel}>Reintentar</Button>
   </div>
-  const ComponentWithErrorFallback = () => error ? <ErrorFallback/> : <Typography>Eres {level}</Typography>
+  const ComponentWithErrorFallback = () => error ? <ErrorFallback/> : <Typography {...props}>Eres {level}</Typography>
 
   return loading ? <LoadingFallback/> : <ComponentWithErrorFallback/>
 }

@@ -2,8 +2,8 @@ import {Link, useNavigate} from "react-router-dom";
 import styled from "@emotion/styled";
 import * as React from "react";
 import MenuItem from "@mui/material/MenuItem";
-import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
+import {AccountGreeting} from "../AccountGreeting/AccountGreeting";
 
 const MenuLink = ({children, to, ...rest}) => <Link to={to.toString()} {...rest}>{children}</Link>
 
@@ -20,8 +20,8 @@ export const AccountMenuitems = ({handleClose}) => {
   }
 
   return <>
-    <MenuItem onClick={() => handleNavigate('/')}>
-      <Avatar/><Typography> Hola! </Typography>
+    <MenuItem>
+      <AccountGreeting />
     </MenuItem>
     <MenuItem onClick={() => handleNavigate('/my-purchases')}>
       <Typography>Mis compras</Typography>
