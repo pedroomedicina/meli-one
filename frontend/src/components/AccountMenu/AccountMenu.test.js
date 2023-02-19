@@ -8,6 +8,11 @@ jest.mock('./AccountMenu', () => ({
   AccountMenu: ({children}) => <mock-menu data-testid="menu">{children}</mock-menu>
 }))
 
+jest.mock('../AccountGreeting/AccountGreeting', () => ({
+  __esModule: true,
+  AccountGreeting: () => <mock-greeting data-testid="greeting" />
+}))
+
 test('renders a menu with two links, one to perfil view and another to pagina principal', async () => {
   render(
     <MemoryRouter>

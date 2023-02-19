@@ -2,6 +2,7 @@ import {render, screen, waitForElementToBeRemoved} from "@testing-library/react"
 import {MemoryRouter} from "react-router-dom";
 import MockTheme from "../../__mocks__/MockTheme/MockTheme";
 import {Purchases} from "./Purchases";
+import WithPurchasesProvider from "../../contexts/PurchasesProvider";
 
 beforeEach(() => {
   fetch.mockResponses([
@@ -43,7 +44,9 @@ jest.mock('../../components/WithRestrictions/WithRestrictions', () => ({
 test('renders a list of purchases', async () => {
   render(<MemoryRouter>
     <MockTheme>
-      <Purchases />
+      <WithPurchasesProvider>
+        <Purchases />
+      </WithPurchasesProvider>
     </MockTheme>
   </MemoryRouter>);
 

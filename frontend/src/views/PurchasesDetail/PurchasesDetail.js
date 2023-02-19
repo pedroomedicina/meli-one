@@ -12,7 +12,7 @@ import {PaymentStatus} from "../../components/PaymentStatus/PaymentStatus";
 export const PurchaseDetail = () => {
   const params = useParams()
   const paramsError = !params['id_compra']
-  const {purchases: storedPurchases} = useContext(PurchasesContext)
+  const {purchases: storedPurchases, loadPurchases} = useContext(PurchasesContext)
   const purchase = Array.isArray(storedPurchases) && storedPurchases.find(purchase => purchase['id_compra'].toString() === params['id_compra'].toString())
 
   const isCurrentYear = new Date(purchase?.['fecha']).getUTCFullYear() === new Date().getUTCFullYear()
@@ -30,7 +30,6 @@ export const PurchaseDetail = () => {
       const paymentResponse = await fetch(`${proxy_api_url}/compras/pago?id_transaccion=${purchase?.['id_transaccion']}`)
       const paymentInfo = await paymentResponse.json()
       setPayment(paymentInfo)
-      console.log(paymentInfo)
     } catch (error) {
       setErrorLoadingPayment('Algo salio mal al cargar tu nivel')
     } finally {
@@ -50,7 +49,6 @@ export const PurchaseDetail = () => {
       const paymentResponse = await fetch(`${proxy_api_url}/compras/envio?id_envio=${purchase?.['id_envio']}`)
       const shipmentInfo = await paymentResponse.json()
       setShipment(shipmentInfo)
-      console.log(shipmentInfo)
     } catch (error) {
       setErrorLoadingShipment('Algo salio mal al cargar tu nivel')
     } finally {
@@ -59,11 +57,15 @@ export const PurchaseDetail = () => {
   }, [purchase])
 
   useEffect(() => {
+    if (!purchase) {
+      loadPurchases()
+      return
+    }
     loadPayment()
     loadShipment()
-  }, [purchase, loadShipment, loadPayment])
+  }, [purchase, loadShipment, loadPayment, loadPurchases])
 
-  return paramsError || !purchase ? <Navigate to="/"/> : <>
+  return paramsError ? <Navigate to={"/"} /> : <>
     <WithRestrictions/>
     <WithNavigation>
       <Container sx={{
@@ -76,7 +78,14 @@ export const PurchaseDetail = () => {
         margin: '0 !important',
         minHeight: 920
       }}>
-        <Container maxWidth="xl" sx={{display: 'flex'}}>
+        {!purchase ? <Container maxWidth="xl" sx={{display: 'flex'}} data-testid="purchases-load-skeleton">
+          <Container sx={{width: '60%'}}>
+            <Skeleton height={500}/>
+          </Container>
+          <Container sx={{background: '#f5f5f5', width: '35%'}}>
+            <Skeleton height={500}/>
+          </Container>
+        </Container> : <Container maxWidth="xl" sx={{display: 'flex'}}>
           <Container sx={{width: '60%'}}>
             <Box sx={{margin: '1em 0'}}>
               <Breadcrumbs aria-label="breadcrumb">
@@ -89,7 +98,7 @@ export const PurchaseDetail = () => {
             <Paper elevation={0}
                    sx={{backgroundColor: 'rgb(245, 245, 245)', borderRadius: '8px', display: 'flex', padding: '1em'}}>
               <Box sx={{flex: 1}}>
-                <Typography variant="h6" t>{purchase['titulo']}</Typography>
+                <Typography variant="h6">{purchase['titulo']}</Typography>
                 <Typography variant="body2">{purchase['cantidad'] > 1 ? `${purchase['cantidad']} unidades` : '1 unidad'}</Typography>
               </Box>
               <Avatar
@@ -132,7 +141,7 @@ export const PurchaseDetail = () => {
               <Typography>{purchase['precio']['moneda']} {purchase['precio']['total'].toLocaleString()}</Typography>
             </Box>
           </Container>
-        </Container>
+        </Container>}
       </Container>
     </WithNavigation>
   </>

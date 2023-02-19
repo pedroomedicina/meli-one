@@ -1,8 +1,6 @@
 import {Box, Container, Pagination, Skeleton, Stack, styled} from "@mui/material";
 import WithNavigation from "../../components/WithNavigation/WithNavigation";
-import {useCallback, useContext, useEffect, useState} from "react";
-import {proxy_api_url} from "../../settings/Services";
-import {serialize} from "../../utils/serializeObjectToQueryParameters";
+import {useContext, useEffect} from "react";
 import {PurchaseListItem} from "../../components/PurchaseListItem/PurchaseListItem";
 import {WithRestrictions} from "../../components/WithRestrictions/WithRestrictions";
 import {PurchasesContext} from "../../contexts/PurchasesProvider";
@@ -21,35 +19,7 @@ const SkeletonStack = () => <Box sx={{width: '100%', padding: '1em 0'}}>
 </Box>
 
 export const Purchases = () => {
-  const {setPurchases: storePurchases} = useContext(PurchasesContext)
-  const [loading, setLoading] = useState(false)
-  const [, setError] = useState('')
-  const [purchases, setPurchases] = useState()
-  const [totalPurchases, setTotalPurchases] = useState(0)
-  const [offset, setOffset] = useState(0)
-  const [limit] = useState(4)
-
-  const loadPurchases = useCallback(async () => {
-    const parameters = {
-      limit,
-      offset,
-    }
-    try {
-      setLoading(true)
-      const userResponse = await fetch(`${proxy_api_url}/`)
-      const user = await userResponse.json()
-      parameters['id_usuario'] = user['id_usuario']
-      const purchasesResponse = await fetch(`${proxy_api_url}/compras/compras_usuario?${serialize(parameters)}`)
-      const purchases = await purchasesResponse.json()
-      setPurchases(purchases['data'])
-      storePurchases(purchases['data'])
-      setTotalPurchases(purchases['total'])
-    } catch (error) {
-      setError('Algo salio mal al cargar tus compras')
-    } finally {
-      setLoading(false)
-    }
-  }, [limit, offset, storePurchases])
+  const {purchases, loading, offset, limit, totalPurchases, loadPurchases, setOffset} = useContext(PurchasesContext)
 
   const handleChangePage = (event, value) => {
     setOffset((value - 1) * limit)
