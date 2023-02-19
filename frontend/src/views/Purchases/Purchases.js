@@ -1,10 +1,11 @@
 import {Box, Container, Pagination, Skeleton, Stack, styled} from "@mui/material";
 import WithNavigation from "../../components/WithNavigation/WithNavigation";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
 import {proxy_api_url} from "../../settings/Services";
 import {serialize} from "../../utils/serializeObjectToQueryParameters";
 import {PurchaseListItem} from "../../components/PurchaseListItem/PurchaseListItem";
 import {WithRestrictions} from "../../components/WithRestrictions/WithRestrictions";
+import {PurchasesContext} from "../../contexts/PurchasesProvider";
 
 const StyledSkeleton = styled(Skeleton)`
   height: 250px;
@@ -16,12 +17,11 @@ const SkeletonStack = () => <Box sx={{width: '100%', padding: '1em 0'}}>
     <StyledSkeleton/>
     <StyledSkeleton/>
     <StyledSkeleton/>
-    <StyledSkeleton/>
-    <StyledSkeleton/>
   </Stack>
 </Box>
 
 export const Purchases = () => {
+  const {setPurchases: storePurchases} = useContext(PurchasesContext)
   const [loading, setLoading] = useState(false)
   const [, setError] = useState('')
   const [purchases, setPurchases] = useState()
@@ -42,13 +42,14 @@ export const Purchases = () => {
       const purchasesResponse = await fetch(`${proxy_api_url}/compras/compras_usuario?${serialize(parameters)}`)
       const purchases = await purchasesResponse.json()
       setPurchases(purchases['data'])
+      storePurchases(purchases['data'])
       setTotalPurchases(purchases['total'])
     } catch (error) {
       setError('Algo salio mal al cargar tus compras')
     } finally {
       setLoading(false)
     }
-  }, [limit, offset])
+  }, [limit, offset, storePurchases])
 
   const handleChangePage = (event, value) => {
     setOffset((value - 1) * limit)
@@ -77,7 +78,7 @@ export const Purchases = () => {
     <WithRestrictions/>
     <WithNavigation>
       <Container maxWidth='xl'>
-        <WithLoadingFallback/>
+          <WithLoadingFallback/>
       </Container>
     </WithNavigation>
   </>

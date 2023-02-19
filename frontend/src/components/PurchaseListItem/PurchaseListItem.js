@@ -7,12 +7,16 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Box, CardHeader} from "@mui/material";
 import moment from 'moment';
+import {useNavigate} from "react-router-dom";
 
 export function PurchaseListItem({purchase}) {
+  const navigate = useNavigate()
   const {fecha, imagen, titulo, vendedor, cantidad, id_compra, precio} = purchase
   const unidades = cantidad > 1 ? `${cantidad} unidades` : '1 unidad'
   const isCurrentYear = new Date(fecha).getUTCFullYear() === new Date().getUTCFullYear()
   const fechaFormateada = moment(fecha).format(isCurrentYear ? 'L' : 'LL')
+
+  const goToPurchaseDetail = ({id_compra}) => navigate(`/my-purchases/${id_compra}`)
 
   return (
     <Card sx={{width: '100%'}}>
@@ -46,7 +50,7 @@ export function PurchaseListItem({purchase}) {
           </Typography>
         </Box>
         <CardActions sx={{alignItems: 'start', padding: '0 0.5em'}}>
-          <Button size="small">Ver Compra</Button>
+          <Button size="small" variant="contained" onClick={() => goToPurchaseDetail(purchase)}>Ver Compra</Button>
         </CardActions>
       </CardContent>
     </Card>
