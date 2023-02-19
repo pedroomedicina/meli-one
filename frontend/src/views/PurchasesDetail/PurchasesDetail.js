@@ -89,8 +89,8 @@ export const PurchaseDetail = () => {
             <Paper elevation={0}
                    sx={{backgroundColor: 'rgb(245, 245, 245)', borderRadius: '8px', display: 'flex', padding: '1em'}}>
               <Box sx={{flex: 1}}>
-                <Typography>{purchase['titulo']}</Typography>
-                <Typography>{purchase['cantidad'] > 1 ? `${purchase['cantidad']} unidades` : '1 unidad'}</Typography>
+                <Typography variant="h6" t>{purchase['titulo']}</Typography>
+                <Typography variant="body2">{purchase['cantidad'] > 1 ? `${purchase['cantidad']} unidades` : '1 unidad'}</Typography>
               </Box>
               <Avatar
                 sx={{height: '48px', width: '48px', 'img': {objectFit: 'contain'}}}
@@ -127,6 +127,10 @@ export const PurchaseDetail = () => {
               <Typography>{purchase['precio']['moneda']} {purchase['precio']['total'].toLocaleString()}</Typography>
             </Box>
             <Divider sx={{margin: '0.5em 0'}}/>
+            <Box sx={{display: 'flex', justifyContent: 'space-between', marginTop: '1em'}}>
+              <Typography>Total</Typography>
+              <Typography>{purchase['precio']['moneda']} {purchase['precio']['total'].toLocaleString()}</Typography>
+            </Box>
           </Container>
         </Container>
       </Container>

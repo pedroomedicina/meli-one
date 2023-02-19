@@ -54,7 +54,7 @@ export default function WithNavigation(props) {
         <SearchBar/>
         <AccountLevel/>
       </Box>
-      <Box sx={headerBoxSx}>
+      <Box sx={{...headerBoxSx, boxShadow: '0 2px 3px -3px #222'}}>
         <SpaceFiller/>
         <Tooltip title="Menu">
           <Button
