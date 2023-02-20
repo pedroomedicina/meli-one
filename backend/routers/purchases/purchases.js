@@ -11,7 +11,7 @@ router.get('/compras_usuario', async (req, res) => {
 
   const servicioMercadolibre = new MercadolibreService()
   try {
-    return res.json(await servicioMercadolibre.getUserPurchases(idUsuario, limit, offset))
+    return res.json(await servicioMercadolibre.getUserPurchases(idUsuario, +limit, +offset))
   } catch (e) {
     return res.status(e.status).send(e.message)
   }
